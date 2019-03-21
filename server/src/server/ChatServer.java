@@ -1,7 +1,7 @@
-package server;
+package src.server;
 
-import network.TCPConnection;
-import network.TCPConnectionListener;
+import src.network.TCPConnection;
+import src.network.TCPConnectionListener;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -66,5 +66,4 @@ public class ChatServer implements TCPConnectionListener {
         for (int i = 0; i < size; i++) {
             connections.get(i).sendString(value);
         }
-    }
-}
+    }}

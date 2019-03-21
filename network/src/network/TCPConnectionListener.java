@@ -1,4 +1,4 @@
-package network;
+package src.network;
 
 public interface TCPConnectionListener {
 

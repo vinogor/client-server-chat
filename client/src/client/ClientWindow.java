@@ -1,7 +1,7 @@
-package client;
+package src.client;
 
-import network.TCPConnection;
-import network.TCPConnectionListener;
+import src.network.TCPConnection;
+import src.network.TCPConnectionListener;
 
 import javax.swing.*;
 import java.awt.*;
