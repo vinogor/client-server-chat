@@ -11,7 +11,8 @@ import java.io.IOException;
 
 public class ClientWindow extends JFrame implements ActionListener, TCPConnectionListener {
 
-    private static final String IP_ADDR = "127.0.0.1";
+    private static final String IP_ADDR = "127.0.10.1";
+//    private static final String IP_ADDR = "0.0.0.1";
     private static final int PORT = 8189;
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
@@ -28,7 +29,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
 
     // создаём объекты которые потом вставим в окно
     private final JTextArea log = new JTextArea(); // область для вывода лога нашего чата
-    private final JTextField fieldNickname = new JTextField("Andreev"); // поле для Никнейма
+    private final JTextField fieldNickname = new JTextField("Andreev"); // поле для Никнейма (пропишем дефолтный)
     private final JTextField fieldInput = new JTextField(); // поле в котором мы будем писать
 
     private TCPConnection connection;
@@ -74,7 +75,11 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         if (msg.equals("")) {
             return;
         }
-        fieldInput.setText(null);// стерет то что было написано в этом поле
+//   дисконнект если юзер напишет в чате exit (РАБОТАЕТ)
+//        if (msg.equals("exit")) {
+//            connection.disconnect();
+//        }
+        fieldInput.setText(null); // сотрёт то что было написано в этом поле
         connection.sendString(fieldNickname.getText() + ": " + msg);
     }
 
@@ -110,10 +115,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
                 log.append(msg + "\n");
                 log.setCaretPosition(log.getDocument().getLength()); // гарантированное заставляем автоскролл сработать
                 // устанавливаем коретку в самый самый конец документа
-
-
             }
         });
     }
-
 }
