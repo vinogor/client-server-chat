@@ -5,11 +5,13 @@ import src.network.TCPConnectionListener;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class ChatServer implements TCPConnectionListener {
 
     public static void main(String[] args) {
+        // просто при старте сразу создаём экземпляр класса...
         new ChatServer();
     }
 
@@ -20,13 +22,30 @@ public class ChatServer implements TCPConnectionListener {
     public ChatServer() {
         System.out.println("Server running...");
 
+
         // слушаем входящее соединение
         try(ServerSocket serverSocket = new ServerSocket(8189)) {
-            System.out.println(serverSocket);
+            System.out.println("InetAddress: " + serverSocket.getInetAddress());
+
+            // команда выше выводит - InetAddress: 0.0.0.0/0.0.0.0  - почему так? почему 2 значения??? почему нули?
+            // почему тогда в ClientWindow, IP_ADDR = "127.0.0.1"  ???
+
+            // Почему если в ClientWindow, указать IP_ADDR = например 127.0.10.1 - всё норм запускается,
+            // и при этом в окне чата пишется что TCPConnection: 127.0.0.1, то есть не тот что я указывал???
+            // а если написать совсем левый IP, то клиент не запускается...
+
+            // почему порт в ClientWindow, PORT = 8189 и сервер слушает порт 8189, а на практике
+            // при запуске клиента порт оказывается например 50914 ??? Как они нашли друг друга?!
+
             while (true) {
                 try {
-                    new TCPConnection(this, serverSocket.accept()); // .accept() - ждём новое соединение и
-                    // как только получает - возвращает объект сокета
+                    Socket socket = serverSocket.accept();
+                    new TCPConnection(this, socket);
+                    System.out.println("Создали объект TCPConnection! ");
+                    // метод .accept() - СПИМ и ЖДЁМ новое соединение и как только получает -
+                    // возвращает объект сокета который хочет подключиться (?)
+                    // и после этого уже создаётся объект TCPConnection
+
                 } catch (IOException e) {
                     System.out.println("TCPConnection exception: " + e);
                 }
@@ -63,7 +82,7 @@ public class ChatServer implements TCPConnectionListener {
     private void sendAllConnections(String value) {
         System.out.println(value); // просто чтобы видеть в консоле
         final int size = connections.size();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) { // перебираем всех клиентов и отправляем им сообщение
             connections.get(i).sendString(value);
         }
     }}
