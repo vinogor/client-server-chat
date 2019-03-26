@@ -1,7 +1,7 @@
-package src.server;
+package server;
 
-import src.network.TCPConnection;
-import src.network.TCPConnectionListener;
+import network.TCPConnection;
+import network.TCPConnectionListener;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -24,11 +24,11 @@ public class ChatServer implements TCPConnectionListener {
 
 
         // слушаем входящее соединение
-        try(ServerSocket serverSocket = new ServerSocket(8189)) {
+        try (ServerSocket serverSocket = new ServerSocket(8189)) {
             System.out.println("InetAddress: " + serverSocket.getInetAddress());
 
             // команда выше выводит - InetAddress: 0.0.0.0/0.0.0.0  - почему так? почему 2 значения??? почему нули?
-            // почему тогда в ClientWindow, IP_ADDR = "127.0.0.1"  ???
+            // почему тогда в ClientWindow, IP_ADDR прописан равным "127.0.0.1"  ???
 
             // Почему если в ClientWindow, указать IP_ADDR = например 127.0.10.1 - всё норм запускается,
             // и при этом в окне чата пишется что TCPConnection: 127.0.0.1, то есть не тот что я указывал???
@@ -43,7 +43,7 @@ public class ChatServer implements TCPConnectionListener {
                     new TCPConnection(this, socket);
                     System.out.println("Создали объект TCPConnection! ");
                     // метод .accept() - СПИМ и ЖДЁМ новое соединение и как только получает -
-                    // возвращает объект сокета который хочет подключиться (?)
+                    // возвращает объект сокета который хочет подключиться
                     // и после этого уже создаётся объект TCPConnection
 
                 } catch (IOException e) {
@@ -79,10 +79,13 @@ public class ChatServer implements TCPConnectionListener {
     }
 
     // метод для рассылки всем сообщений
+    // тут можно сделать паттерн Наблюдатель (я пока хз как)
     private void sendAllConnections(String value) {
         System.out.println(value); // просто чтобы видеть в консоле
         final int size = connections.size();
+
         for (int i = 0; i < size; i++) { // перебираем всех клиентов и отправляем им сообщение
             connections.get(i).sendString(value);
         }
-    }}
+    }
+}

@@ -1,7 +1,7 @@
-package src.client;
+package client;
 
-import src.network.TCPConnection;
-import src.network.TCPConnectionListener;
+import network.TCPConnection;
+import network.TCPConnectionListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +16,6 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     private static final int PORT = 8189;
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -63,8 +62,6 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         } catch (IOException e) {
             printMsg("Connection Exception: " + e);
         }
-
-
     }
 
     // срабатывает по нажатию Enter
