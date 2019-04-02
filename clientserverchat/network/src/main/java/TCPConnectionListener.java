@@ -1,5 +1,3 @@
-package com.vinogor.network;
-
 public interface TCPConnectionListener {
 
     void onConnectionReady(TCPConnection tcpConnection);

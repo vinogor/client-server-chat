@@ -1,8 +1,3 @@
-package com.vinogor.client;
-
-import com.vinogor.network.TCPConnection;
-import com.vinogor.network.TCPConnectionListener;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
