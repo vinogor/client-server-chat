@@ -1,4 +1,4 @@
-package network;
+package com.vinogor.network;
 
 import java.io.*;
 import java.net.Socket;
@@ -17,19 +17,19 @@ public class TCPConnection {
     private final Socket socket;
     private final Thread rxThread;  // "rx" - значит что слушает входящее сообщение
 
-    private final network.TCPConnectionListener eventListener;
+    private final TCPConnectionListener eventListener;
 
     private final BufferedReader in;
     private final BufferedWriter out;
 
     // конструктор, где сокет создадим сами
-    public TCPConnection(network.TCPConnectionListener eventListener, String ipAdr, int port) throws IOException {
+    public TCPConnection(TCPConnectionListener eventListener, String ipAdr, int port) throws IOException {
         // создаём сокет и вызываем другой конструктор этого же класса
         this(eventListener, new Socket(ipAdr, port));
     }
 
     // конструктор для запуска соединения снаружи, кто-то снаружи создаст сокет
-    public TCPConnection(network.TCPConnectionListener eventListener, Socket socket) throws IOException {
+    public TCPConnection(final TCPConnectionListener eventListener, Socket socket) throws IOException {
         this.socket = socket;
         this.eventListener = eventListener;
 

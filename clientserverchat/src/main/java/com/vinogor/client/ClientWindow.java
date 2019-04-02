@@ -1,7 +1,7 @@
-package client;
+package com.vinogor.client;
 
-import network.TCPConnection;
-import network.TCPConnectionListener;
+import com.vinogor.network.TCPConnection;
+import com.vinogor.network.TCPConnectionListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,10 +12,11 @@ import java.io.IOException;
 public class ClientWindow extends JFrame implements ActionListener, TCPConnectionListener {
 
     private static final String IP_ADDR = "127.0.10.1";
-//    private static final String IP_ADDR = "0.0.0.1";
+    //    private static final String IP_ADDR = "0.0.0.1";
     private static final int PORT = 8189;
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -62,6 +63,8 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         } catch (IOException e) {
             printMsg("Connection Exception: " + e);
         }
+
+
     }
 
     // срабатывает по нажатию Enter
@@ -105,7 +108,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     // может быть вызван из РАЗНЫХ ПОТОКОВ
     // поэтому (особенность SWING) - мы не можем напрямую общаться с элементами управления swing
     // но можем из специального потока ЕДТ (??), поэтому вот так вот сложно ниже написано
-    private synchronized void printMsg(String msg) {
+    private synchronized void printMsg(final String msg) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

@@ -1,4 +1,4 @@
-package network;
+package com.vinogor.network;
 
 public interface TCPConnectionListener {
 
